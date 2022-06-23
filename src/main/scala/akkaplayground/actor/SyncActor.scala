@@ -3,6 +3,9 @@ package akkaplayground.actor
 import akka.actor.typed.{ActorRef, ActorSystem, Behavior}
 import akka.actor.typed.scaladsl.Behaviors
 
+/**
+ * 2 players - each one of then is sending messages to another
+ */
 object SyncActor {
 
   trait PingPong
