@@ -1,9 +1,12 @@
 package akkaplayground.streams
 
+import akka.{Done, NotUsed}
 import akka.actor.typed.ActorSystem
 import akka.actor.typed.scaladsl.Behaviors
 import akka.stream.OverflowStrategy
 import akka.stream.scaladsl.{Flow, Sink, Source}
+
+import scala.concurrent.Future
 
 object StreamPlayground {
 
@@ -12,9 +15,9 @@ object StreamPlayground {
   /**
    * Simple example
    */
-  val source = Source(1 to 100)
-  val flow = Flow[Int].map(_ * 10)
-  val sink = Sink.foreach[Int](println)
+  val source: Source[Int, NotUsed] = Source(1 to 100)
+  val flow: Flow[Int, Int, NotUsed] = Flow[Int].map(_ * 10)
+  val sink: Sink[Int, Future[Done]] = Sink.foreach[Int](println)
   val simpleGrapf = source.via(flow).to(sink)
 
   /**
