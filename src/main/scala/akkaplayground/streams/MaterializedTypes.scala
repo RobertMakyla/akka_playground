@@ -55,7 +55,12 @@ object MaterializedTypes {
     val futInt: Future[Int] = source.toMat(sinkAdder)(Keep.right).run()
     futInt.onComplete(sum => println(s"done adding = $sum"))
 
-    //todo https://doc.akka.io/docs/akka/current/stream/stream-quickstart.html#flattening-sequences-in-streams
+    Thread.sleep(1000)
+
+    // flattening sequences: mapConcat(elem => Iterable[])  we use mapConcat because flatMap would take a function( e => Stream)
+    val futSetInt: Future[Set[Int]] = Source(List(Set(1, 2), Set(2, 3), Set(2, 3, 4, 5))).mapConcat(identity).runFold(Set.empty[Int])((acc: Set[Int], e: Int) => acc + e)
+    futSetInt.onComplete(s => println(s"done flattening sequences = $s"))
+
   }
 }
 
