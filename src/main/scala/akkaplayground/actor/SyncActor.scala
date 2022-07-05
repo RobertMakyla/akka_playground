@@ -33,7 +33,7 @@ object SyncActor {
     /*
       I can ONLY create children within the top-main actor
      */
-  val player1 = ctx.spawn(player, "player-1")
+    val player1 = ctx.spawn(player, "player-1")
     val player2 = ctx.spawn(player, "player-2")
     player1 ! Ping(0, player2)
     Behaviors.same
