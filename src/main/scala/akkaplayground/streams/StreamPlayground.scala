@@ -23,7 +23,7 @@ object StreamPlayground {
   /**
    * FUSION
    *
-   * when we use 'via' and 'to', by default Akka-Streams uses the same actor (Fusion) because the  majority of processign cases are fast so we don't want to create unnecessary network traffic
+   * when we use 'via' and 'to', by default Akka-Streams uses the same actor (Fusion) because the  majority of processing cases are fast so we don't want to create unnecessary network traffic
    * And an Actor processes messages sequentially so no back pressure here:
    *
    * Actual Result here:

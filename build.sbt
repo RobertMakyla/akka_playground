@@ -15,6 +15,8 @@ libraryDependencies ++= {
     "com.typesafe.akka" %% "akka-stream" % AkkaVersion,
     "com.typesafe.akka" %% "akka-stream-testkit" % AkkaVersion % Test,
     "org.slf4j" % "slf4j-api" % slf4jVersion,
-    "org.slf4j" % "slf4j-simple" % slf4jVersion
+    "org.slf4j" % "slf4j-simple" % slf4jVersion,
+    "org.scalactic" %% "scalactic" % "3.2.7",
+    "org.scalatest" %% "scalatest" % "3.2.7" % "test"
   )
 }

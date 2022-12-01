@@ -11,21 +11,21 @@ object StatelessActor {
 
   case class Decrease(i: Int) extends StateChanger
 
-  def myActor(state: Int = 0): Behavior[StateChanger] = Behaviors.receive {
-    (context, msg) => msg match {
-      case Increase(i) =>
-        context.log.info(s"Increasing state ${state}")
-        myActor(state + i)
-      case Decrease(i) =>
-        context.log.info(s"Decreased state ${state}")
-        myActor(state - i)
-    }
-  }
+  def myBehavior(state: Int): Behavior[StateChanger] = Behaviors.receive{ (ctx, msg) => msg match {
+    case Increase(i) =>
+      val newState = state + i
+      ctx.log.info(s"increase by ${i} gives ${newState} ")
+      myBehavior(newState)
+    case Decrease(i) =>
+      val newState = state - i
+      ctx.log.info(s"decrease by ${i} gives ${newState} ")
+      myBehavior(newState)
+  }}
 
 
   def main(args: Array[String]) = {
 
-    val actorRef: ActorSystem[StateChanger] = ActorSystem(myActor(), "main")
+    val actorRef: ActorSystem[StateChanger] = ActorSystem(myBehavior(0), "main")
 
     actorRef ! Increase(100)
     actorRef ! Increase(100)

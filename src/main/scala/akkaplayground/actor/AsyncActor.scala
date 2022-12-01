@@ -10,30 +10,25 @@ object AsyncActor {
 
   case class Msg(iteration: Int, actorName: String)
 
-  def player: Behavior[Msg] = Behaviors.receive { (ctx, msg) =>
-    msg match {
-      case Msg(i, actorName) =>
-        ctx.log.info(s"${i} at ${actorName}")
-        ctx.self ! Msg(i + 1, actorName)
-        Behaviors.same
-    }
+  def player: Behavior[Msg] = Behaviors.receive { (ctx, msg: Msg) =>
+    ctx.log.info(s"hello, ${msg.actorName}}")
+    ctx.self.tell(msg.copy(iteration = msg.iteration + 1))
+    Behaviors.same
   }
 
-  val main: Behavior[Any] = Behaviors.setup { ctx => // All this will be done when actor is created, not when message is received
-    /*
-      I can ONLY create children within the top-main actor
-     */
-    val player1 = ctx.spawn(player, "Mike")
-    val player2 = ctx.spawn(player, "John")
-    player1 ! Msg(0, "Mike")
-    player2 ! Msg(0, "John")
+
+  val guardianActor : Behavior[Unit] = Behaviors.setup { ctx =>
+    val playerA = ctx.spawn(player, "playerA")
+    val playerB = ctx.spawn(player, "playerB")
+
+    playerA ! Msg(0, "actor_A")
+    playerB ! Msg(0, "actor_B")
     Behaviors.same
   }
 
   def main(args: Array[String]): Unit = {
-
-    val mainRef = ActorSystem(main, "main")
-    Thread.sleep(10)
-    mainRef.terminate()
+    val as = ActorSystem(guardianActor, "main")
+    Thread.sleep(20)
+    as.terminate()
   }
 }
