@@ -28,7 +28,7 @@ object AsyncActor {
 
   def main(args: Array[String]): Unit = {
     val as = ActorSystem(guardianActor, "main")
-    Thread.sleep(20)
+    Thread.sleep(10)
     as.terminate()
   }
 }

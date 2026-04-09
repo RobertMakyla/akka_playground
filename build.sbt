@@ -3,7 +3,7 @@ name := "akka_playground"
 
 version := "1.0"
 
-scalaVersion := "2.13.8"
+scalaVersion := "2.13.18"
 
 
 libraryDependencies ++= {
